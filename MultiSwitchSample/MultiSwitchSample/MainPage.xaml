@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MultiSwitchSample"
              x:Class="MultiSwitchSample.MainPage">
-
-	<Label Text="Welcome to Xamarin.Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
-
+    <StackLayout>
+        <local:MultiToogleSwitch Toggles="{Binding Toggles}" SelectedId="{Binding SelectedId, Mode=TwoWay}"/>
+        <Label Text="{Binding SelectedId, StringFormat='Id: {0}'}"/>
+    </StackLayout>
 </ContentPage>
