@@ -35,6 +35,7 @@ public string[] Toggles { get; set; } = new string[] { "On", "Auto", "Off", "Som
 
 - You cane change some parameters
 ``` 
+public new Color BackgroundColor { get; set; }
 public Color SelectedColor { get; set; }
 public Color DefaultColor { get; set; }
 
