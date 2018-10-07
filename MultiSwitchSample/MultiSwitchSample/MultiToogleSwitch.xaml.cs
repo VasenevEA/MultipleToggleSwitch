@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -26,6 +24,8 @@ namespace MultiSwitchSample
         public Color DefaultBorderColor { get; set; } = Color.FromHex("#14B774");
 
         public float CornerRadius { get; set; } = 10;
+
+        public double FontSize { get; set; }
 
         public string[] Toggles
         {
@@ -97,7 +97,7 @@ namespace MultiSwitchSample
             MainStack.Children.Clear();
             for (int i = 0; i < tooglesNames.Length; i++)
             {
-                var toogleButton = new ToogleCustomButton(i, CornerRadius);
+                var toogleButton = new ToogleCustomButton(i, CornerRadius, FontSize);
                 ToogleButtons.Add(toogleButton);
                 toogleButton.Command = ClickCommand;
                 toogleButton.CommandParameter = toogleButton;
@@ -227,7 +227,8 @@ namespace MultiSwitchSample
 
         private Frame body;
 
-        public ToogleCustomButton(int id, float cornerRadius)
+
+        public ToogleCustomButton(int id, float cornerRadius, double fontSize)
         {
             SetBorderColor(DefaultBorderColor);
             HasShadow = false;
@@ -247,7 +248,8 @@ namespace MultiSwitchSample
             {
                 Margin = 10,
                 HorizontalOptions = LayoutOptions.Center,
-                HorizontalTextAlignment = TextAlignment.Center
+                HorizontalTextAlignment = TextAlignment.Center,
+                FontSize = fontSize
             };
 
             body.Content = label;

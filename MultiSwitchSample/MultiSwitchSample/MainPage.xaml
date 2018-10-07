@@ -8,7 +8,8 @@
                                  SelectedId="{Binding SelectedId, Mode=TwoWay}"
                                  HorizontalOptions="Center"
                                  VerticalOptions="Center"
-                                 EvenWidth="True"/>
+                                 EvenWidth="True"
+                                 FontSize="14"/>
         <Label Text="{Binding SelectedId, StringFormat='Id: {0}'}"/>
     </StackLayout>
 </ContentPage>
