@@ -10,7 +10,7 @@ namespace MultiSwitchSample
 {
     public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
-        public string[] Toggles { get; set; } = new string[] { "Вкл", "Авто", "Выкл" };
+        public string[] Toggles { get; set; } = new string[] { "On", "Auto", "Off", "Some" };
 
         private int _id = 1;
         public int SelectedId

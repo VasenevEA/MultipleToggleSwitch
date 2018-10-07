@@ -13,17 +13,19 @@ namespace MultiSwitchSample
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MultiToogleSwitch : ContentView, INotifyPropertyChanged
     {
-        public new Color BackgroundColor { get; set; } = Color.Gray;
+        public new Color BackgroundColor { get; set; } = Color.FromHex("#14B774");
 
         public List<ToogleCustomButton> ToogleButtons { get; set; } = new List<ToogleCustomButton>();
 
         public IToogled SelectedToogle { get; set; }
 
-        public Color SelectedColor { get; set; } = Color.Green;
-        public Color DefaultColor { get; set; } = Color.Gray;
+        public Color SelectedColor { get; set; } = Color.FromRgba(50, 249, 3, 137);
+        public Color DefaultColor { get; set; } = Color.FromHex("#14B774");
 
-        public Color SelectedBorderColor { get; set; } = Color.LightGreen;
-        public Color DefaultBorderColor { get; set; } = Color.LightGray;
+        public Color SelectedBorderColor { get; set; } = Color.FromHex("#0CB90C");
+        public Color DefaultBorderColor { get; set; } = Color.FromHex("#14B774");
+
+        public float CornerRadius { get; set; } = 10;
 
         public string[] Toggles
         {
@@ -80,18 +82,22 @@ namespace MultiSwitchSample
                     _switch.Select((int)newValue);
                 }
             }
-        } 
+        }
+
+
+        public bool EvenWidth { get; set; }
 
         public MultiToogleSwitch()
         {
             InitializeComponent();
+            this.SizeChanged += MultiToogleSwitch_SizeChanged;
         }
         public void Init(string[] tooglesNames)
         {
             MainStack.Children.Clear();
             for (int i = 0; i < tooglesNames.Length; i++)
             {
-                var toogleButton = new ToogleCustomButton(i);
+                var toogleButton = new ToogleCustomButton(i, CornerRadius);
                 ToogleButtons.Add(toogleButton);
                 toogleButton.Command = ClickCommand;
                 toogleButton.CommandParameter = toogleButton;
@@ -103,9 +109,25 @@ namespace MultiSwitchSample
                 toogleButton.DefaultBorderColor = DefaultBorderColor;
 
                 toogleButton.Text = tooglesNames[i];
+                toogleButton.CornerRadius = CornerRadius;
 
                 MainStack.Children.Add(toogleButton);
                 MainStack.BackgroundColor = BackgroundColor;
+            }
+        }
+
+        private void MultiToogleSwitch_SizeChanged(object sender, EventArgs e)
+        {   //Set even width
+            if (EvenWidth)
+            {
+                var maxSize = ToogleButtons.Max(x => x.Width);
+                foreach (var toogle in ToogleButtons)
+                    toogle.WidthRequest = maxSize;
+            }
+            else
+            {
+                foreach (var toogle in ToogleButtons)
+                    toogle.WidthRequest = 0;
             }
         }
 
@@ -175,7 +197,7 @@ namespace MultiSwitchSample
         }
     }
 
-    public class ToogleCustomButton : StackLayout, IToogled
+    public class ToogleCustomButton : Frame, IToogled
     {
         public int NumberId { get; set; }
         public Color SelectedColor { get; set; }
@@ -203,21 +225,35 @@ namespace MultiSwitchSample
 
         public Color Color { get; set; }
 
-        private StackLayout border;
+        private Frame body;
 
-        public ToogleCustomButton(int id)
+        public ToogleCustomButton(int id, float cornerRadius)
         {
-            Padding = 2;
+            SetBorderColor(DefaultBorderColor);
+            HasShadow = false;
+            Padding = 4;
+            Margin = new Thickness(-3, 0);
+            CornerRadius = cornerRadius;
 
             NumberId = id;
-            border = new StackLayout();
-            border.Children.Add(label = new Label
+            body = new Frame
             {
-                Margin = 10
-            });
-            Children.Add(border);
+                CornerRadius = this.CornerRadius,
+                Padding = 0,
+                Margin = 0,
+                HasShadow = false
+            };
+            label = new Label
+            {
+                Margin = 10,
+                HorizontalOptions = LayoutOptions.Center,
+                HorizontalTextAlignment = TextAlignment.Center
+            };
 
-            border.GestureRecognizers.Add(new TapGestureRecognizer(view =>
+            body.Content = label;
+            Content = body;
+
+            body.GestureRecognizers.Add(new TapGestureRecognizer(view =>
             {
                 Command?.Execute(CommandParameter);
             }));
@@ -236,19 +272,17 @@ namespace MultiSwitchSample
 
         public void Toogle(bool animate = true)
         {
-            animate = false;
             Device.BeginInvokeOnMainThread(async () =>
             {
                 if (!this.AnimationIsRunning("FadeTo") && animate)
                 {
-                    await this.FadeTo(0.5, 150, Easing.Linear);
-                    border.BackgroundColor = SelectedColor;
-                    BackgroundColor = SelectedBorderColor;
-                    await this.FadeTo(1, 150, Easing.Linear);
+                    body.BackgroundColor = SelectedColor;
+                    SetBorderColor(SelectedBorderColor);
+                    await this.FadeTo(1, 50, Easing.Linear);
                 }
                 else
                 {
-                    border.BackgroundColor = SelectedColor;
+                    body.BackgroundColor = SelectedColor;
                     BackgroundColor = SelectedBorderColor;
                 }
             });
@@ -256,19 +290,17 @@ namespace MultiSwitchSample
 
         public void UnToogle(bool animate = true)
         {
-            animate = false;
             Device.BeginInvokeOnMainThread(async () =>
             {
                 if (!this.AnimationIsRunning("FadeTo") && animate)
                 {
-                    border.BackgroundColor = DefaultColor;
+                    await this.FadeTo(0.7, 150, Easing.Linear);
+                    SetBorderColor(DefaultColor);
                     BackgroundColor = DefaultBorderColor;
-                    await this.FadeTo(1, 150, Easing.Linear);
                 }
                 else
                 {
-                    await this.FadeTo(0.7, 150, Easing.Linear);
-                    border.BackgroundColor = DefaultColor;
+                    body.BackgroundColor = DefaultColor;
                     BackgroundColor = DefaultBorderColor;
                 }
             });

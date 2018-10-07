@@ -4,7 +4,11 @@
              xmlns:local="clr-namespace:MultiSwitchSample"
              x:Class="MultiSwitchSample.MainPage">
     <StackLayout>
-        <local:MultiToogleSwitch Toggles="{Binding Toggles}" SelectedId="{Binding SelectedId, Mode=TwoWay}"/>
+        <local:MultiToogleSwitch Toggles="{Binding Toggles}" 
+                                 SelectedId="{Binding SelectedId, Mode=TwoWay}"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 EvenWidth="True"/>
         <Label Text="{Binding SelectedId, StringFormat='Id: {0}'}"/>
     </StackLayout>
 </ContentPage>
