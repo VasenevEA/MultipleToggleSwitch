@@ -5,7 +5,10 @@ This is a ContentView based Control.
 Requeires - None;
 
 How to use:
-- add files .xaml and .xaml.cs to your pcl/.net Standart project
+- add files to your pcl/.net Standart project
+  - MultiToogleSwitch.xaml 
+  - MultiToogleSwitch.xaml.cs
+  - ToogleCustomButton.cs 
 - custom file (if need)
 - paste code on your page/view\
 ```
