@@ -23,9 +23,27 @@ namespace MultiSwitchSample
             {
                 _id = value;
                 OnPropertyChanged("SelectedId");
+                Task.Run(async() => {
+                    ImageSource = "wait";
+                    await Task.Delay(5000);
+                    ImageSource = null;
+                });
             }
         }
+        private string _ImageSource;
+        public string ImageSource
+        {
+            get
+            {
+                return _ImageSource;
+            }
+            set
+            {
+                _ImageSource = value;
+                OnPropertyChanged("ImageSource");
 
+            }
+        }
         public MainPage()
         {
             InitializeComponent();

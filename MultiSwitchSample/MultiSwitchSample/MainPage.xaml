@@ -9,7 +9,15 @@
                                  HorizontalOptions="Center"
                                  VerticalOptions="Center"
                                  EvenWidth="True"
-                                 FontSize="14"/>
+                                 FontSize="14"
+
+                                 SelectedImageSource="{Binding ImageSource}"
+                                 SelectedImageWidth="15"
+                                 SelectedImageHeight="15"
+                                 SelectedImageHorizontalOptions="End"
+                                 SelectedImageVerticalOptions="Start"
+                                 SelectedImageAspect="AspectFit"
+                                 HeightRequest="50"/>
         <Label Text="{Binding SelectedId, StringFormat='Id: {0}'}"/>
     </StackLayout>
 </ContentPage>

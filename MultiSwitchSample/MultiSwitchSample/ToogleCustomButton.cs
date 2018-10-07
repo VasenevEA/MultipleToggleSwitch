@@ -8,6 +8,8 @@ namespace MultiSwitchSample
         int NumberId { get; }
         void Toogle(bool animate = true);
         void UnToogle(bool animate = true);
+
+        void SetImage(string source, double width, double height, Aspect aspect, LayoutOptions verticalOption, LayoutOptions horisontalOption);
     }
 
     public class ToogleCustomButton : Frame, IToogled
@@ -37,9 +39,8 @@ namespace MultiSwitchSample
         public object CommandParameter { get; set; }
 
         public Color Color { get; set; }
-
         private Frame body;
-
+        private Image image;
 
         public ToogleCustomButton(int id, float cornerRadius, double fontSize)
         {
@@ -65,7 +66,12 @@ namespace MultiSwitchSample
                 FontSize = fontSize
             };
 
-            body.Content = label;
+            var imageLay = new Grid();
+            image = new Image();
+            image.WidthRequest = this.WidthRequest;
+            imageLay.Children.Add(image);
+            imageLay.Children.Add(label);
+            body.Content = imageLay;
             Content = body;
 
             body.GestureRecognizers.Add(new TapGestureRecognizer(view =>
@@ -119,6 +125,16 @@ namespace MultiSwitchSample
                     BackgroundColor = DefaultBorderColor;
                 }
             });
+        }
+
+        public void SetImage(string source, double width, double height, Aspect aspect, LayoutOptions verticalOption, LayoutOptions horizontalOptions)
+        {
+            image.Source = source;
+            image.Aspect = aspect;
+            image.WidthRequest = width;
+            image.HeightRequest = height;
+            image.VerticalOptions = verticalOption;
+            image.HorizontalOptions = horizontalOptions;
         }
     }
 }

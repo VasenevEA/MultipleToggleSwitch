@@ -65,6 +65,31 @@ namespace MultiSwitchSample
             }
         }
 
+        public string SelectedImageSource
+        {
+            get { return (string)GetValue(SelectedImageSourceProperty); }
+            set { SetValue(SelectedImageSourceProperty, value); }
+        }
+
+        public static readonly BindableProperty SelectedImageSourceProperty =
+    BindableProperty.Create("SelectedImageSource", typeof(string), typeof(MultiToogleSwitch),
+                default(string), BindingMode.OneWay, propertyChanged: SelectedImageSourcePropertyPropertyChanged);
+
+        private static void SelectedImageSourcePropertyPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var button = bindable as MultiToogleSwitch;
+            button.Select(button.SelectedId);
+        }
+
+        #region Image specific
+        public double SelectedImageWidth { get; set; }
+        public double SelectedImageHeight { get; set; }
+        public Aspect SelectedImageAspect { get; set; }
+        public LayoutOptions SelectedImageVerticalOptions { get; set; }
+        public LayoutOptions SelectedImageHorizontalOptions { get; set; }
+        #endregion
+
+
         public bool EvenWidth { get; set; }
 
         public MultiToogleSwitch()
@@ -114,9 +139,23 @@ namespace MultiSwitchSample
             foreach (var item in ToogleButtons)
             {
                 if (item.NumberId == id)
+                {
+                    item.SetImage(SelectedImageSource, SelectedImageWidth,
+                        SelectedImageHeight,
+                        SelectedImageAspect,
+                        SelectedImageVerticalOptions,
+                        SelectedImageHorizontalOptions);
                     item.Toogle(false);
+                }
                 else
+                {
+                    item.SetImage(null, SelectedImageWidth,
+                         SelectedImageHeight,
+                         SelectedImageAspect,
+                         SelectedImageVerticalOptions,
+                         SelectedImageHorizontalOptions);
                     item.UnToogle(false);
+                }
             }
         }
 
@@ -137,5 +176,5 @@ namespace MultiSwitchSample
             SelectedToogle = button;
             SelectedId = button.NumberId;
         });
-    }     
+    }
 }
