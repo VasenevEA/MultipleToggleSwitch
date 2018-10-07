@@ -9,7 +9,7 @@ How to use:
   - MultiToogleSwitch.xaml 
   - MultiToogleSwitch.xaml.cs
   - ToogleCustomButton.cs 
-- custom file (if need)
+
 - paste code on your page/view\
 ```
 <local:MultiToogleSwitch Toggles="{Binding Toggles}" 
@@ -19,11 +19,22 @@ How to use:
                                  EvenWidth="True"
                                  FontSize="14"/>
 ```
-- In you ViewModel add property ( array of buttons text) 
+- In your ViewModel add property ( array of buttons text) 
 ```
 public string[] Toggles { get; set; } = new string[] { "On", "Auto", "Off", "Some" };
 ```
 - Bind SelectedId property
+- You can change some parameters
+``` 
+public new Color BackgroundColor { get; set; }
+public Color SelectedColor { get; set; }
+public Color DefaultColor { get; set; }
+
+public Color SelectedBorderColor { get; set; }
+public Color DefaultBorderColor { get; set; }
+public float CornerRadius { get; set; }
+public double FontSize { get; set; }
+```
 - Profit!
 
 ```
@@ -35,15 +46,3 @@ public string[] Toggles { get; set; } = new string[] { "On", "Auto", "Off"};
 public string[] Toggles { get; set; } = new string[] { "On", "Auto", "Off", "Some" };
 ```
 ![](https://github.com/VasenevEA/MultipleToogleSwitch/blob/master/Res/4toogleSwitch.gif)
-
-- You cane change some parameters
-``` 
-public new Color BackgroundColor { get; set; }
-public Color SelectedColor { get; set; }
-public Color DefaultColor { get; set; }
-
-public Color SelectedBorderColor { get; set; }
-public Color DefaultBorderColor { get; set; }
-public float CornerRadius { get; set; }
-public double FontSize { get; set; }
-```
