@@ -4,7 +4,9 @@
              x:Class="MultiSwitchSample.MultiToogleSwitch">
     <ContentView.Content>
         <StackLayout>
-            <StackLayout Orientation="Horizontal" x:Name="MainStack"/>
+            <Frame x:Name="MainFrame">
+                <StackLayout Orientation="Horizontal" x:Name="MainStack"/>
+            </Frame>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

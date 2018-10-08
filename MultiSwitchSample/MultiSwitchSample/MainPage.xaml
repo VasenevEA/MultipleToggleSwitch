@@ -17,7 +17,8 @@
                                  SelectedImageHorizontalOptions="End"
                                  SelectedImageVerticalOptions="Start"
                                  SelectedImageAspect="AspectFit"
-                                 HeightRequest="50"/>
+                                 HeightRequest="50"
+                                 Margin ="5"/>
         <Label Text="{Binding SelectedId, StringFormat='Id: {0}'}"/>
     </StackLayout>
 </ContentPage>

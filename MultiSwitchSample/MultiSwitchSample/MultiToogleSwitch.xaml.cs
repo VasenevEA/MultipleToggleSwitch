@@ -99,6 +99,15 @@ namespace MultiSwitchSample
         }
         public void Init(string[] tooglesNames)
         {
+            MainFrame.CornerRadius = CornerRadius;
+            MainFrame.BackgroundColor = BackgroundColor;
+            MainFrame.HasShadow = false;
+
+            MainFrame.Padding = new Thickness(3,0);
+
+            MainStack.Margin = 0;
+            MainStack.Padding = 0;
+
             MainStack.Children.Clear();
             for (int i = 0; i < tooglesNames.Length; i++)
             {
